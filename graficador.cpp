@@ -50,15 +50,17 @@ string obtenerSalidaDeTermino(int termino, bool devolverSignoPositivo, bool devo
     return resultado;
 }
 
-string ecuacionConFormato;
+string ecuacionConFormato; bool primeraVez = true;
 int main(int fromX, int toX, int fromY, int toY, int ec_A, int ec_B, int ec_C, int ec_N, int escalaY) {
 
-    // variables para definir el rango de la gráfica y los valores dela ecuación
-    //int fromX=-30, toX=30, fromY=-50, toY=50, ec_A, ec_B, ec_C, ec_N, escalaY = 1;
-
-    fromX = isnan(fromX) ? fromX : -30; toX = isnan(toX) ? toX : 30;
-    fromY = isnan(fromY) ? fromY : -50; toY = isnan(toY) ? toY : 50;
-    escalaY = isnan(escalaY) ? escalaY : 4;
+    // Se definen los valores predeterminados para el rango y escala de Y cuando recien se abre el programa
+    if (primeraVez) {
+        printf("Hello");
+        fromX = -30; toX = 30;
+        fromY = -50; toY = 50;
+        escalaY = 4;
+        primeraVez = false;
+    }
 
     string leerRango, leerEscala, leerEcuacion = "s";
 
@@ -77,7 +79,7 @@ int main(int fromX, int toX, int fromY, int toY, int ec_A, int ec_B, int ec_C, i
         cout << "n = "; cin >> ec_N;
     }
 
-    printf("\n\nDesea definir el rango de la grafica? (s/n)\n (El rango predeterminado es [%i, %i][%i, %i])\n", fromX, toX, fromY, toY);
+    printf("\n\nDesea definir el rango de la grafica? (s/n)\n (El rango actual es [%i, %i][%i, %i])\n", fromX, toX, fromY, toY);
     cin >> leerRango;
 
     // lee los valores para el rango de impresión de la gráfica si el usuario lo desea
@@ -91,7 +93,7 @@ int main(int fromX, int toX, int fromY, int toY, int ec_A, int ec_B, int ec_C, i
         cout << "hasta = "; cin >> toY;
     }
 
-    printf("\n\nDesea definir la escala para Y? (s/n)\n (La escala predeterminada es %i)\n", escalaY);
+    printf("\n\nDesea definir la escala para Y? (s/n)\n (La escala actual es %i)\n", escalaY);
     cin >> leerEscala;
 
     if (leerEscala == "s") {
