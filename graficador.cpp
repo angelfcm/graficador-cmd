@@ -50,18 +50,32 @@ string obtenerSalidaDeTermino(int termino, bool devolverSignoPositivo, bool devo
     return resultado;
 }
 
-int main() {
+string ecuacionConFormato;
+int main(int fromX, int toX, int fromY, int toY, int ec_A, int ec_B, int ec_C, int ec_N, int escalaY) {
 
     // variables para definir el rango de la gráfica y los valores dela ecuación
-    int fromX=-30, toX=30, fromY=-50, toY=50, ec_A, ec_B, ec_C, ec_N, escalaY = 1;
-    string leerRango, leerEscala;
+    //int fromX=-30, toX=30, fromY=-50, toY=50, ec_A, ec_B, ec_C, ec_N, escalaY = 1;
+
+    fromX = isnan(fromX) ? fromX : -30; toX = isnan(toX) ? toX : 30;
+    fromY = isnan(fromY) ? fromY : -50; toY = isnan(toY) ? toY : 50;
+    escalaY = isnan(escalaY) ? escalaY : 4;
+
+    string leerRango, leerEscala, leerEcuacion = "s";
 
     cout << "Ecuacion en la forma y = Ax^n + Bx + C\n\n";
-    // lee los valores para la ecuación
-    cout << "A = "; cin >> ec_A;
-    cout << "B = "; cin >> ec_B;
-    cout << "C = "; cin >> ec_C;
-    cout << "n = "; cin >> ec_N;
+
+    // Si el usuario ya uso el programa en la misma ejecucion, se le pregunta si desea definir nuevamente la ecuacion
+    if (ecuacionConFormato != "") {
+        cout << "Ya a definido la ecuacion " << ecuacionConFormato << ", desea definirla de nuevo? (s/n)\n";
+        cin >> leerEcuacion;
+    }
+    if (leerEcuacion == "s") {
+        // lee los valores para la ecuación
+        cout << "A = "; cin >> ec_A;
+        cout << "B = "; cin >> ec_B;
+        cout << "C = "; cin >> ec_C;
+        cout << "n = "; cin >> ec_N;
+    }
 
     printf("\n\nDesea definir el rango de la grafica? (s/n)\n (El rango predeterminado es [%i, %i][%i, %i])\n", fromX, toX, fromY, toY);
     cin >> leerRango;
@@ -107,8 +121,10 @@ int main() {
         + (ec_N == 1 || ec_N == 0 || ec_A == 0 ? "" : "^" + oec_N );
     oec_BX = oec_B + (ec_B == 0 ? "" : "x");
 
+    ecuacionConFormato = oec_AXN + oec_BX + oec_C;
+
     cout << "\n\n////////////////////////////////////////////////////////////////////////\n";
-    cout << "La grafica de y = " << oec_AXN << oec_BX << oec_C;
+    cout << "La grafica de y = " << ecuacionConFormato;
     printf(", con el rango de impresion [%i, %i][%i, %i] \ny escala %i para Y es: \n", fromX, toX, fromY, toY, escalaY);
     cout << "////////////////////////////////////////////////////////////////////////\n\n";
     // Fin de la simplificación visual de la ecuación
@@ -191,7 +207,7 @@ int main() {
 
     if (reiniciar == "s") {
         system("cls");
-        main();
+        main(fromX, toX, fromY, toY, ec_A, ec_B, ec_C, ec_N, escalaY);
     }
     else
         system("exit");
